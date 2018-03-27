@@ -1,0 +1,27 @@
+<ion-view view-title="{{'history' | translate}}" >
+    
+    <ion-nav-bar class="bar-barber">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+    
+    <ion-content style="background-image: url('img/bg-detail-client.png'); background-size: cover;">
+        
+        <ion-list class="sidemenu-list">
+            <ion-item class="clearBg item-icon-right fontWhite"
+                ng-repeat="appointment in clientAppointments" type="item-text-wrap" >
+                <!--<img ng-src="{{appointment.MobileUser.foto}}" />-->
+                <small style="color: #f1f2f3">{{appointment.MobileUser.nombre}}</small><br/>
+                <p style="color: #FFFFFF">{{ appointment.Appointment.fecha | amDateFormat: 'dddd. MMMM D, YYYY. hh:mm a'}}</p>
+                <small style="color: #f1f2f3">{{appointment.Service.titulo}} ({{appointment.Service.nombre}})</small>
+                <br/>
+                <small style="color: #f1f2f3">{{appointment.Service.precio | currency:currency+' ' :2}}</small>
+                <br/>
+                <small style="color: #f1f2f3" ng-if='appointment.Appointment.valoradicional !=null && appointment.Appointment.valoradicional != 0 '>{{appointment.Appointment.label_tipovalor }} : {{appointment.Appointment.valoradicional | currency:currency+' ' :2}}</small>
+                <br/>
+                <small style="color: #f1f2f3"  ng-if='appointment.Appointment.observaciones !=null && appointment.Appointment.observaciones !="" && appointment.Appointment.observaciones !="null" '>{{appointment.Appointment.observaciones}}</small>
+                <i class="icon icon-accessory"><span class="badge badge-stable">{{appointment.Appointment.total_servicio | currency:currency+' ' :2}}</span></i>
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+</ion-view>

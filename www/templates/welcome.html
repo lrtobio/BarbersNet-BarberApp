@@ -1,0 +1,32 @@
+<ion-view view-title="Welcome Barber!">
+
+    <!-- remove menu button -->
+    <ion-nav-buttons side="left"></ion-nav-buttons>
+
+    <ion-content style="background: url(img/barbersnet/bg_fondo.png) center; background-size: cover;">
+        <br/><br/>
+        
+        <center>
+            <img ng-src="img/barbersnet/logo.png" class="avatar" style="width: 120px; height: 120px">
+        
+            <br/><br/>
+            <div>
+                <h3><a class="fontWhite" href="#/app/signin" >For Sign In click here</a></h3>
+            </div> 
+
+            <br/>
+            <div ng-app="starter" ng-controller="AppCtrl">
+
+                <br/>
+                <!-- ng-controller="BarberAddCtrl" -->
+                <div>
+                    <h3><a class="fontWhite" href="#/app/login" >For Log In click here</a></h3>
+                    <br/><br/>
+                    <h4><a class="fontWhite" href="#" ng-click="forgotPassword()" >Did you forget your password ?</a></h4>
+                </div>
+                <br/><br/>
+            </div>
+        </center>
+
+    </ion-content>
+</ion-view>

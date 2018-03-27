@@ -1,0 +1,65 @@
+
+<ion-view view-title="{{'edit'|translate}} {{'service'|translate}}">
+    <ion-nav-bar class="bar-barber">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+    
+    <ion-content class="fontWhite" style="background-image: url('img/bg-barber-preview.png'); background-size: cover;">
+        <br/>
+        <br/>
+        <center>
+        {{service.Service.nombre}}
+        <br/>
+        {{service.Service.descripcion}}
+        <br/>
+        </center>
+        <br/>
+        <div ng-app="starter" ng-controller="ServicesEditCtrl">
+            <form ng-submit="saveService()">
+                
+                <!--<div class="item item-input-inset">
+                    <label class="item-input-wrapper">Title:&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input style="color: black;" type="text" ng-model="data.titulo">
+                    </label>
+                </div>
+                <div class="item item-input-inset">
+                    <label class="item-input-wrapper">Price ({{ currency }}):&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input style="color: black;" type="text" ng-model="data.precio">
+                    </label>
+                </div>
+                
+                <div class="item item-input-inset">
+                    <label class="item-input-wrapper">Points:&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input style="color: black;" type="text" ng-model="data.puntos">
+                    </label>
+                </div>-->
+                <label class="myPadding item item-input item-stacked-label item-borderless">
+                    <span class="input-label fontWhite bold">{{'title'|translate}}</span>
+                    <input type="text" ng-model="data.titulo" placeholder="{{'title'|translate}}">
+                </label>
+                <label class="myPadding item item-input item-stacked-label item-borderless">
+                    <span class="input-label fontWhite bold">{{'price'|translate}}</span>
+                    <input type="number" min="0" ng-model="data.precio" placeholder="{{ currency }}">
+                </label>
+                <label class="myPadding item item-input item-stacked-label item-borderless">
+                    <span class="input-label fontWhite bold">{{'points'|translate}}</span>
+                    <input type="number" min="0" ng-model="data.puntos" placeholder="{{'points'|translate}}">
+                </label>
+                <label class="myPadding item item-input item-stacked-label item-borderless">
+                    <span class="input-label fontWhite bold">{{'length'|translate}}</span>
+                    <input type="number" min="0" ng-model="data.duracion" placeholder="{{'length_ph'|translate}}">
+                </label>
+                <!--
+                <label class="myPadding item item-input item-stacked-label item-borderless">
+                    <span class="input-label fontWhite bold">Payment link</span>
+                    <input type="text" ng-model="data.linkdepago" placeholder="Payment link">
+                </label>
+                -->
+                <br/>
+                <button type="submit" name="submit" class="button button-full myRed fontWhite" >{{'edit'|translate}}</button>
+               
+
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

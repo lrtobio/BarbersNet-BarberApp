@@ -1,0 +1,83 @@
+
+<ion-view view-title="{{'menu_3'|translate}}">
+    
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+       <i class="button button-icon button-new" ng-click="showAddExpenses()" ></i>
+    </ion-nav-buttons>
+    <ion-content class="fontWhite" style="background-image: url('img/barbersnet/bg_fondo.png'); background-size: cover;">
+        <br/><br/>
+        <center>
+    
+            <div>
+               <h2 class="fontWhite">{{'set_date'|translate}}</h2>
+            </div>
+            <onezone-datepicker datepicker-object="onezoneDatepicker">
+            <div class="myPadding padding row">
+
+                    <div class="col">
+                        <h4 class="light">{{'start'|translate}}</h4>
+                        <button class="button button-block button-small button-positive show-onezone-datepicker" style="border-radius: 5px" ng-click="choose_date('start')">
+                            <b>{{ start_date | amDateFormat: 'MMMM DD, YYYY'}} </b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <h4 class="light">{{'end'|translate}}</h4>
+                        <button class="button button-block button-small button-positive show-onezone-datepicker" style="border-radius: 5px" ng-click="choose_date('end')">
+                            <b>{{ end_date | amDateFormat: 'MMMM DD, YYYY'}} </b>
+                        </button>
+                    </div>
+
+                <!--<input ng-model="start_date" id="date" type="hidden" style="color: black;" value="{{start_date}}" />
+                <input ng-model="end_date" id="date" type="hidden" style="color: black;" value="{{end_date}}" />-->
+            </div>
+            </onezone-datepicker>
+            
+            
+            <br/>
+            {{'appointment'|translate}}s
+            <div class="centeredAndOpacity"><h1 class="fontWhite"><p>{{barberReport.amount}}</p></h1></div>
+            
+            <br/><br/>
+            <ion-slide-box>
+                <ion-slide>
+                {{'incomes'|translate}}
+                <h1 class="fontWhite" style="margin-top: 6px;">{{barberReport.incomes | currency: currency+' '}}</h1>
+                <br/><br/>
+                </ion-slide>
+                <ion-slide>
+                {{'discount'|translate}}s
+                <h1 class="fontWhite" style="margin-top: 6px;">{{barberReport.discounts | currency: currency+' '}}</h1>
+                </ion-slide>
+                <ion-slide>
+                {{'tip'|translate}}s
+                <h1 class="fontWhite" style="margin-top: 6px;">{{barberReport.tips | currency: currency+' '}}</h1>
+                </ion-slide>
+                <ion-slide>
+                {{'pay_add'|translate}}
+                <h1 class="fontWhite" style="margin-top: 6px;">{{barberReport.others | currency: currency+' '}}</h1>
+                </ion-slide>
+                <ion-slide>
+                {{'expenses'|translate}}
+                <h1 class="fontWhite" style="margin-top: 6px;">{{barberReport.expenses | currency: currency+' '}}</h1>
+                </ion-slide>
+            </ion-slide-box>
+
+        </center>
+        <script id='searchPopup.html' type='text/ng-template'>
+            <center>{{'type_expenses' | translate}}</center>
+            
+            <onezone-datepicker datepicker-object="onezoneDatepicker2">
+                <button class="button button-block button-small button-positive show-onezone-datepicker" style="border-radius: 5px" >
+                    <b>{{ exp_date | amDateFormat: 'MMMM DD, YYYY'}} </b>
+                </button>
+            </onezone-datepicker>
+            <br/>
+            <input type="number" ng-model="dataReport.egresos">
+            
+    
+        </script>
+    </ion-content>
+</ion-view>

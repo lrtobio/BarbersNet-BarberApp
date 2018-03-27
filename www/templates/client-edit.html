@@ -1,0 +1,71 @@
+<ion-view view-title="{{client.MobileUser.nombre}}">
+    
+    <ion-nav-bar class="bar-barber">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-content class="fontWhite" style="background: url(img/bg-detail-client.png) center; background-size: cover;">
+
+        <br/>
+        <div ng-app="ClientEdit" ng-controller="ClientEditCtrl">
+            <form>
+                <div class="list"> 
+                    
+                    <br/>
+                    <label class="myPadding item item-input item-stacked-label">
+                        <span class="input-label fontWhite bold">* {{'name'| translate}}:</span>
+                        <input type="text" name="name" ng-model="data.name" placeholder="{{'full_name'| translate}}:">
+                    </label>
+                    <label class="myPadding item item-input item-stacked-label">
+                        <span class="input-label fontWhite bold">* Email</span>
+                        <input type="email" name="email" ng-model="data.email" placeholder="@">
+                    </label>
+                    <label class="myPadding item item-input item-stacked-label">
+                        <span class="input-label fontWhite bold">* {{'phone'| translate}}:</span>
+                        <input type="tel" name="phone" ng-model="data.phone" placeholder="phone">
+                    </label>
+                    <label class="myPadding item item-input item-stacked-label">
+                        <span class="input-label fontWhite bold">* {{'gender'| translate}}:</span><br/>
+                        <label class="item item-select" style="border-radius: 5px">
+                            <select name="gender" ng-model="data.gender">
+                                <option value="M">{{'male'| translate}}:</option>
+                                <option value="F">{{'female'| translate}}:</option>
+                            </select>
+                        </label>
+                    </label>
+                    <!--<label class="myPadding item item-input item-stacked-label">-->
+                    <!--<label class="myPadding item item item-stacked-label">-->
+                    <div class="myPadding item item item-stacked-label">
+                        <span class="input-label fontWhite bold">{{'birthdate'| translate}}:</span>
+                        <!--<input type="date" id="date" ng-model="data.birthday">-->
+                        <onezone-datepicker datepicker-object="onezoneDatepicker">
+                            <!-- style="border-radius: 5px" -->
+                            <button class="button button-block button-small button-stable show-onezone-datepicker" >
+                                <b>{{ data.birthday | date: 'yyyy  -  MM   -   dd'}} </b>
+                                <!--<b>{{ data.nacimiento}}</b>-->
+                            </button>                    
+                        </onezone-datepicker>
+
+                        <input ng-model="data.birthday" id="date" type="hidden" style="color: black;" value="{{data.birthday}}" />
+                    <!--</label>-->
+                    </div>
+                </div>
+
+                <!--
+                    <onezone-datepicker datepicker-object="onezoneDatepicker">
+                        <button class="button button-block button-outline button-positive show-onezone-datepicker">
+                            {{ data.birthday }} 
+                        </button>
+                    </onezone-datepicker>
+                <input ng-model="data.birthday" id="date" type="hidden" style="color: black;" value="{{data.birthday}}" />
+                -->
+                
+                <button type="submit" name="submit" ng-click="saveClient()" class="button button-full myRed fontWhite" >{{'save'| translate}}:</button>
+                
+                <input type="hidden" name="birthday" ng-model="data.muserid" value="" >
+                <br/>
+            </form>
+        </div>
+
+    </ion-content>
+</ion-view>

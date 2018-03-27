@@ -1,0 +1,32 @@
+<ion-view view-title="{{'menu_4'|translate}}">
+    <ion-nav-buttons side="right">
+       
+        <span class="badge myRed light" style="margin: 5px">{{services.length}} </span>
+     
+       <i class="button button-icon button-new" ui-sref="app.service-add"></i>
+    </ion-nav-buttons>    
+    
+  <ion-content style="background-image: url('img/bg-barber-preview.png'); background-size: cover;">
+    <ion-list class="sidemenu-list">
+      <ion-item class="clearBg item-remove-animate item-icon-right fontWhite "
+                ng-repeat="service in services" type="item-text-wrap"
+                href="#/app/service-edit/{{service.Service.id}}"
+                style="padding-left: 35px">
+        <b>{{service.Service.titulo}}<br/>({{service.Service.nombre}})</b><br/>
+        <small>{{service.Service.descripcion}}</small>
+        
+        <div>
+            <i class="icon icon-accessory" style="padding-right: 35px">{{service.Service.precio |currency: currency+' ': 2}}</i>
+        </div>
+        <ion-option-button class="button-assertive icon-left ion-trash-b" ng-click="removeService(service.Service.id)">{{'delete'|translate}}</ion-option-button>
+      </ion-item>
+        
+    </ion-list>
+  </ion-content>
+    
+    <!--<div class="float-button">
+     <span class="height-fix">
+          <span class="badge badge-assertive">{{services.length}} </span>
+     </span>
+   </div>-->
+</ion-view>

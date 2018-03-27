@@ -1,0 +1,42 @@
+<ion-view view-title="{{client.MobileUser.nombre}}">
+
+    <ion-nav-bar class="bar-barber">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-content class="fontWhite" style="background-image: url('img/bg-detail-client.png'); background-size: cover;">
+        <br/>
+        <center>
+            
+            <img ng-if="client.MobileUser.foto==null || client.MobileUser.foto==''" ng-src="img/barbersnet/img_nouser.png" class="avatar" style="width: 150px; height: 150px">
+            <img ng-if="client.MobileUser.foto!=null && client.MobileUser.foto!=''" ng-src="{{client.MobileUser.foto}}" class="avatar" style="width: 150px; height: 150px">
+            
+            <h4 class="fontWhite">
+                {{client.MobileUser.nombre}}
+            </h4>
+            <p ng-if="client.MobileUser.observaciones != null && client.MobileUser.observaciones != '' ">{{client.MobileUser.observaciones}}</p>
+            
+            {{'client_since'| translate}} <span  am-time-ago="client.MobileUser.first_appointment"></span>
+            <br/>
+            <br/>
+            <div class="row myPadding">
+                <div class="col-50">
+                    <h1 class="light">{{client.MobileUser.puntosacumulados}}</h1> <small class="stable">{{'points'| translate}}  </small>
+                </div>
+                <div class="col-50">
+                    <h1 class="light">{{client.MobileUser.appointment_count}} </h1> <small class="stable">{{'appointment'| translate}}s  </small>
+                </div>
+            </div><br/>
+            <div>
+                <a ng-if="client.MobileUser.telefono!=null && client.MobileUser.telefono!=''" href="tel:{{client.MobileUser.telefono}}" ><img src="img/barbersnet/btn_call.png" width="20%"/></a>
+                &nbsp;
+                <a ng-if="client.MobileUser.email!=null && client.MobileUser.email!=''" href="mailto:{{client.MobileUser.email}}" ><img src="img/barbersnet/btn_mail.png" width="20%"/></a>
+                &nbsp;
+                <a ng-if="client.MobileUser.id!=null && client.MobileUser.id!=''" href="#/app/client-history/{{client.MobileUser.id}}"><img src="img/barbersnet/btn_history.png" width="20%"/></a>
+                &nbsp;
+                <a ng-if="client.MobileUser.creadopor!=null && client.MobileUser.creadopor!='' && client.MobileUser.creadopor=='B'" href="#/app/client-edit/{{client.MobileUser.id}}"><img src="img/barbersnet/btn_edit.png" width="20%"/></a>
+            </div>
+            
+        </center>
+    </ion-content>
+</ion-view>

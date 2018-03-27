@@ -1,0 +1,56 @@
+<ion-view view-title="{{'new'| translate}} {{'posts'| translate}}">
+    
+    <ion-nav-bar class="bar-barber">
+        <ion-nav-back-button style=" color: #fff;"></ion-nav-back-button>
+    </ion-nav-bar>
+    
+    <ion-content class="fontWhite" style="background: url(img/barbersnet/bg_fondo.png) center; background-size: cover;">
+        <br/>
+        <br/>
+            <center>
+                <div class="video-container" ng-if="postData.type_post == 'video'">
+                    <iframe  ng-src="{{trustSrc('https://www.youtube.com/embed/'+postData.content_video)}}" type="text/html" frameborder="0" allowfullscreen></iframe>
+                 
+                </div>
+                <div class="full-image" ng-if="postData.type_post == 'imagen'">
+                    <img id ="foto" src="{{postData.srcImagen}}" alt="{{'choose_img_or_link'| translate}}"   class="full-image" ng-model="postData.content_post" style="border: none !important"/>
+                </div>
+                
+                <div class="row myPadding">
+                    <div class="col">
+                        <a href="" ng-click="cargarFoto()"><img ng-src="img/adjuntar.png" width="30%"/></a>&nbsp;&nbsp;
+                        <a href="" ng-click="tomarFoto()"><img ng-src="img/camera.png" width="30%"/></a>&nbsp;&nbsp;
+                        <a href="" ng-click="showVideoPopup()"><img ng-src="img/youtube_link.png" width="30%"/></a>
+                    </div>                    
+                </div>
+            </center>
+                <div class="padding">
+                    <div class="light padding" style="text-align: justify">{{postData.type_content + '_desc' | translate}} </div>
+                    <br/>
+                    <div class="item item-select" style="border-radius: 5px">
+                        <!-- ng-change="setSelectedService(dataAppo.selectServices)" -->
+                        <select  ng-model="postData.type_content">
+                            <option value="news">{{'news' | translate}} </option>
+                            <option value="promos">{{'promos' | translate}} </option>
+                            <option value="sales">{{'sales' | translate}} </option>
+                            <option value="vacancies">{{'vacancies' | translate}} </option>
+                        </select>
+                    </div>
+                    <br ng-if="postData.type_content == 'news'">
+                    <div ng-if="postData.type_content != 'news'" class="row row-center" style="padding: 0px 0px 0px 0px">
+                        <div class="col text-center">{{'duration_days' | translate}}</div>
+                        <div class="col"  style="padding-right: 0px"><input type="number" max="30" min="1" class="text-center" ng-model="postData.days" ></div>
+                    </div>
+                    <div class="item item-borderless" style="border-radius: 5px">
+                        <textarea ng-model="postData.descripcion" placeholder="{{'obs_ph'| translate}}" maxlength="150"></textarea>
+                    </div>
+                </div>
+        
+                <button type="submit" name="submit" ng-click="savePost()" class="button button-full fontWhite myRed">{{'post' | translate}}</button>
+               
+                <script id='videoPopup.html' type='text/ng-template'>
+                    <input type="text" ng-model="content_post.value" >
+                </script>
+    </ion-content>
+</ion-view>
+

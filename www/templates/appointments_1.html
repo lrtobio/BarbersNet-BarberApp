@@ -1,0 +1,76 @@
+<ion-view view-title="My Agenda ({{appointments.length}})" >
+    
+    <ion-side-menu side="left"></ion-side-menu>
+    
+    <ion-nav-buttons side="right">
+       <i class="button button-icon button-new" ui-sref="app.appointment-add"></i>
+    </ion-nav-buttons>
+    
+    <ion-content style="background-image: url('img/bg-appointments.jpg'); background-size: cover;">
+        
+        <onezone-datepicker datepicker-object="onezoneDatepicker">
+            <center class="fontWhite">
+            <br/>
+            <div ng-if="dataAppo.date =='No date selected'">
+            <ion-icon class="icon-calendar show-onezone-datepicker" style="width: 15%" ></ion-icon>
+            <br/>
+            <h4 class="fontWhite">{{ dataAppo.date | date: 'fullDate'}}</h4>
+            </div>
+            <div ng-if="dataAppo.date !='No date selected'">
+            <ion-icon class="icon-calendar show-onezone-datepicker"></ion-icon>
+            <br/>
+            <h5 class="fontWhite">{{ dataAppo.date | date: 'fullDate'}}</h5>
+            </div>
+            </center>
+        </onezone-datepicker>   
+        <br/> 
+        <center>
+            <p class="fontWhite" ng-if="appointments==null || appointments.length<=0 "><br/><br/>No appointments were found</p>
+        </center>
+          
+        <ion-list class="sidemenu-list">
+                        
+            <ion-item class="clearBg item-remove-animate item-avatar item-icon-right fontWhite"
+                ng-repeat="appointment in appointments" type="item-text-wrap"
+                ng-class="{'item-highlight': appointment_id==appointment.Appointment.id}"
+                href="#/app/appointments/{{appointment.Appointment.id}}" >
+                
+                <!--<div class="item-highlight" ng-if="appointment_id == appointment.Appointment.id" >-->
+                
+                <!--<div ng-if="{{appointment.MobileUser.foto}}">-->
+                <img ng-src="{{appointment.MobileUser.foto}}" />
+                <!--
+                <img ng-if="appointment.MobileUser.foto!=null && appointment.MobileUser.foto!=''" ng-src="{{appointment.MobileUser.foto}}" />
+                <img ng-if="appointment.MobileUser.foto==null && appointment.MobileUser.foto==''" ng-src="img/barbersnet/img_nouser.png" />
+                -->
+                
+                <!--</div>-->
+                <small>{{appointment.MobileUser.nombre}}</small><br/>
+                <b>{{appointment.Appointment.hora | lowercase}}</b><br/>
+                <small>{{appointment.Service.titulo}} ({{appointment.Service.nombre}})</small>
+                <br/>
+                <small ng-if="appointment.Appointment.observaciones!=null && appointment.Appointment.observaciones!=''">Obs: {{appointment.Appointment.observaciones}}</small>
+
+                <!--<p>{{appointment.price}}</p>-->
+
+                <!--
+                <i class="icon ion-chevron-right icon-accessory"></i>
+                -->
+                
+                <!--<i class="icon icon-accessory">{{currency}}&nbsp;{{appointment.Service.precio}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>-->
+                <i class="icon icon-accessory"><span class="badge badge-stable">{{appointment.Service.precio| currency:currency+' ' :2}}</span></i>
+                
+                <ion-option-button class="button-positive fontWhite ion-compose" ng-click='goToView("/app/appointment-edit/{{appointment.Appointment.id}}")' >
+                    Edit
+                </ion-option-button>
+                
+                <ion-option-button class="button-assertive ion-trash-a" ng-click="removeAppointment({{appointment.Appointment.id}})">
+                  Delete
+                </ion-option-button>
+                
+                <!--</div>-->
+            </ion-item>
+        </ion-list>
+          
+    </ion-content>
+</ion-view>

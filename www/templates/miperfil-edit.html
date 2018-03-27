@@ -1,0 +1,487 @@
+<ion-view view-title="{{'edit'|translate}}">
+    
+    <ion-nav-bar class="bar-barber bar bar-header">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-buttons side="right">
+        <a href="#" ng-click="popupActivar()" ng-class="barberData.activo ? 'button button-icon balanced ion-toggle-filled':'button button-icon stable ion-toggle' "></a>
+    </ion-nav-buttons> 
+    <ion-content class="fontWhite" style="background: url(img/bg-detail-client.png) center; background-size: cover;">
+        <center>
+            
+            <div id="map" data-tap-disabled="true"></div><br/>
+            
+            <img id ="foto" ng-src="{{fotobarbero}}" ng-model="barberData.foto" class="avatar" style="width: 150px; height: 150px"/>
+            <div class="row myPadding">
+                <div class="col">
+                    <a href="" ng-click="cargarFoto()"><img ng-src="img/adjuntar.png" width="25%"/></a>&nbsp;&nbsp;&nbsp;
+                    <a href="" ng-click="tomarFoto()"><img ng-src="img/camera.png" width="25%"/></a>&nbsp;&nbsp;&nbsp;
+                    <!--<a href="" ng-click="rotateImage()"><img ng-src="img/rotate.png" width="25%"/></a>-->
+                </div>
+            </div>
+            
+            <h4 class="fontWhite">{{barber.Barber.nombre}}</h4>
+            {{barber.Barber.email}}
+            <!--
+            <br/>
+            <br/>
+            Share this app to other barbers:
+            <a href="#" ng-click="shareLink()" ><br/>
+                <ion-icon class="icon-share" style="opacity: 0.8"></ion-icon>
+            </a>
+            <br/>
+            Invite your clients to book using their app:
+            <a href="#" ng-click="shareLink()" ><br/>
+                <ion-icon class="icon-share" style="opacity: 0.8"></ion-icon>
+            </a>
+            <br/>
+            -->
+        </center>
+        <div class="list">
+            
+            <form>
+                
+                <div class="myPadding item item-input item-stacked-label">
+                    <a href="#" ng-click="abirPopup('Location')" ng-class="geolocalizado ? 'button ion-ios-location button-small button-block  button-calm':'button button-small button-block ion-ios-location button-stable'" >
+                    {{geolocalizado ? located : locate_on_map }}
+                    <!--<ion-icon ng-class="geolocalizado ? 'icon ion-ios-location-outline':'icon ion-ios-location'" ></ion-icon>-->
+                    </a>
+                    
+                    <span class="input-label fontWhite bold">{{'address'|translate}}</span>
+                    <input type="text" ng-model="barberData.direccion" placeholder="{{'address'|translate}}">
+                    
+                    <span class="input-label fontWhite bold">{{'phone'|translate}}</span>
+                    <input type="text" ng-model="barberData.telefono" placeholder="{{'phone'|translate}}">
+                    
+                    <span class="input-label fontWhite bold">{{'password'|translate}}</span>
+                    <input type="text" ng-model="barberData.password" placeholder="*****">
+                </div>
+                <label class="myPadding item item-input item-stacked-label">
+                    <span class="input-label fontWhite bold">{{'comments'|translate}}</span><br/>
+                    <textarea ng-model="barberData.descripcion" placeholder=" {{'obs_ph'|translate}}"></textarea>
+                </label>
+                <label class="myPadding item item-input item-stacked-label">
+                    <span class="input-label fontWhite bold">{{'currency'|translate}}</span>
+                    <input type="text" ng-model="barberData.currency" placeholder="{{'currency'|translate}}">
+                
+                    <span class="input-label fontWhite bold">{{'average_time'|translate}}</span>
+                    <input type="number" min="0" max="60" step="5" ng-model="barberData.duracioncita" placeholder="( min )">
+                </label>
+                <!--<hr>-->
+                <div class="myPadding item item-input item-stacked-label fontWhite">
+                    {{'optional'|translate}}<br/>
+                    <span class="input-label fontWhite bold">{{'barbershop'|translate}}</span>
+                    <input type="text" ng-model="barberData.nombrebarberia" placeholder="{{'name'|translate}}">
+                    <span class="input-label fontWhite bold">{{'paypal_email'|translate}}</span>
+                    <input type="email" ng-model="barberData.paypalemail" placeholder="( @ )">
+                    
+                    <span class="input-label fontWhite bold">{{'business_taxes'|translate}}</span>
+                    <input type="number" ng-model="barberData.impuestos" placeholder="( % )" >
+                    <br/>
+                    <a href="#" ng-click="abirPopup('Schedule')" class="button ion-calendar button-small button-block  button-calm" > 
+                        {{'schedule'|translate}}
+                    </a>
+                </div>
+                
+                
+                <input id="latitud" type="hidden" ng-model="barberData.latitud" >
+                <input id="longitud" type="hidden" ng-model="barberData.longitud">
+                
+                <br/>
+                
+                    
+                <button type="submit" name="submit" ng-click="saveBarberProfile()" class="button button-full myRed fontWhite" >{{'save'|translate}}</button>
+            </form>
+        </div>
+        
+        <script id='modalPopupLocation.html' type='text/ng-template'>
+            <div class="modal" >
+                <div class="button button-clear bar-barber bar bar-header fontWhite" ng-click="closeModal()" style="position:relative; float:right;"><span class="icon ion-close fontWhite"></span></div>
+                <div id="divPopup"></div>
+            </div>
+        </script>
+        <script id="modalPopupSchedule1.html" type="text/ng-template">
+        <ion-modal-view>
+          <ion-header-bar class="bar-barber">
+            <button class="button button-clear button-light icon ion-close " ng-click="closeModal()"></button>
+                <h1 class="title">{{'schedule'|translate}}</h1>
+          </ion-header-bar>
+          <ion-content  style="background: url(img/bg-detail-client.png) center; background-size: cover; " class="fontWhite">
+            <center>
+                        <table width="90%">
+                            <tr align="center">
+                                <td colspan="3"><br/></td>
+                            </tr>
+                            <tr align="center">
+                                <td align="left"><b>{{'monday'|translate}}</b></td>
+                                <td></td>
+                                <td align="right"><input id="chklunes" type="checkbox" ng-click="disableDay('lunes')" />{{'disable_day'|translate}}</td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <button id="lunesinicio1" ng-click="displayTimePicker('lunes', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'starts'|translate}}: {{barberData.horario.lunes.inicio1}}</b>
+                                    </button>
+                                    <!--<input type="time" ng-model="barberData.horario.lunes.inicio1" >-->
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.lunes.fin1" >-->
+                                    
+                                    <button id="lunesfin1" ng-click="displayTimePicker('lunes', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'ends'|translate}}: {{barberData.horario.lunes.fin1}}</b>
+                                    </button>
+                                </td>
+                            </tr>
+                    
+                            <tr align="center">
+                                <td colspan="3"><br/></td>
+                            </tr>
+                            <tr align="center">
+                                <td align="left"><b>{{'tuesday'|translate}}</b></td>
+                                <td></td>
+                                <td align="right"><input id="chkmartes" type="checkbox" ng-click="disableDay('martes')" />{{'disable_day'|translate}}</td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.martes.inicio1" >-->
+                                    <button id="martesinicio1" ng-click="displayTimePicker('martes', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'starts'|translate}}: {{barberData.horario.martes.inicio1}}</b>
+                                    </button>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.martes.fin1" >-->
+                                    <button id="martesfin1" ng-click="displayTimePicker('martes', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'ends'|translate}}: {{barberData.horario.martes.fin1}}</b>
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                            <tr align="center">
+                                <td colspan="3"><br/></td>
+                            </tr>
+                            <tr align="center">
+                                <td align="left"><b>{{'wednesday'|translate}}</b></td>
+                                <td></td>
+                                <td align="right"><input id="chkmiercoles" type="checkbox" ng-click="disableDay('miercoles')" />{{'disable_day'|translate}}</td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.miercoles.inicio1" >-->
+                                    <button id="miercolesinicio1" ng-click="displayTimePicker('miercoles', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'starts'|translate}}: {{barberData.horario.miercoles.inicio1}}</b>
+                                    </button>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.miercoles.fin1" >-->
+                                    <button id="miercolesfin1" ng-click="displayTimePicker('miercoles', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'ends'|translate}}: {{barberData.horario.miercoles.fin1}}</b>
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                            <tr align="center">
+                                <td colspan="3"><br/></td>
+                            </tr>
+                            <tr align="center">
+                                <td align="left"><b>{{'thrusday'|translate}}</b></td>
+                                <td></td>
+                                <td align="right"><input id="chkjueves" type="checkbox" ng-click="disableDay('jueves')" />{{'disable_day'|translate}}</td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.jueves.inicio1" >-->
+                                    <button id="juevesinicio1" ng-click="displayTimePicker('jueves', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'starts'|translate}}: {{barberData.horario.jueves.inicio1}}</b>
+                                    </button>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.jueves.fin1" >-->
+                                    <button id="juevesfin1" ng-click="displayTimePicker('jueves', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'ends'|translate}}: {{barberData.horario.jueves.fin1}}</b>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr align="center">
+                                <td colspan="3"><br/></td>
+                            </tr>
+                            <tr align="center">
+                                <td align="left"><b>{{'friday'|translate}}</b></td>
+                                <td></td>
+                                <td align="right"><input id="chkviernes" type="checkbox" ng-click="disableDay('viernes')" />{{'disable_day'|translate}}</td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.viernes.inicio1" >-->
+                                    <button id="viernesinicio1" ng-click="displayTimePicker('viernes', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'starts'|translate}}: {{barberData.horario.viernes.inicio1}}</b>
+                                    </button>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.viernes.fin1" >-->
+                                    <button id="viernesfin1" ng-click="displayTimePicker('viernes', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'ends'|translate}}: {{barberData.horario.viernes.fin1}}</b>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr align="center">
+                                <td colspan="3"><br/></td>
+                            </tr>
+                            <tr align="center">
+                                <td align="left"><b>{{'saturday'|translate}}</b></td>
+                                <td></td>
+                                <td align="right"><input id="chksabado" type="checkbox" ng-click="disableDay('sabado')" />{{'disable_day'|translate}}</td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.sabado.inicio1" >-->
+                                    <button id="sabadoinicio1" ng-click="displayTimePicker('sabado', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'starts'|translate}}: {{barberData.horario.sabado.inicio1}}</b>
+                                    </button>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.sabado.fin1" >-->
+                                    <button id="sabadofin1"ng-click="displayTimePicker('sabado', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'ends'|translate}}: {{barberData.horario.sabado.fin1}}</b>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr align="center">
+                                <td colspan="3"><br/></td>
+                            </tr>
+                            <tr align="center">
+                                <td align="left"><b>{{'sunday'|translate}}</b></td>
+                                <td></td>
+                                <!-- ng-model="chks.domingo" -->
+                                <td align="right"><input id="chkdomingo" type="checkbox"  ng-click="disableDay('domingo')" />{{'disable_day'|translate}}</td>
+                            </tr>
+                            <tr align="center">
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.domingo.inicio1" >-->
+                                    <button id="domingoinicio1" ng-click="displayTimePicker('domingo', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'starts'|translate}}: {{barberData.horario.domingo.inicio1}}</b>
+                                    </button>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <!--<input type="time" ng-model="barberData.horario.domingo.fin1" >-->
+                                    <button id="domingofin1" ng-click="displayTimePicker('domingo', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                                        <b>{{'ends'|translate}}: {{barberData.horario.domingo.fin1}}</b>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr><td colspan="3"><br/><br/></td></tr>
+                            
+                        </table>
+                    </center>
+          </ion-content>
+        </ion-modal-view>
+      </script>
+      <script id="modalPopupSchedule.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar-barber">
+                <button class="button button-clear button-light icon ion-close " ng-click="closeModal()"></button>
+                <h1 class="title">{{'schedule'|translate}}</h1>
+            </ion-header-bar>
+            <ion-content  style="background: url(img/bg-detail-client.png) center; background-size: cover; " class="fontWhite">
+                <div class="row">
+                    <div class="col"><b>{{'monday'|translate}}</b></div>
+                    <div class="col text-right"><input id="chklunes" type="checkbox" ng-click="disableDay('lunes')" />{{'disable_day'|translate}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button id="lunesinicio1" ng-click="displayTimePicker('lunes', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.lunes.inicio1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="lunesfin1" ng-click="displayTimePicker('lunes', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.lunes.fin1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="lunesinicio2" ng-click="displayTimePicker('lunes', 'inicio2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.lunes.inicio2}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="lunesfin2" ng-click="displayTimePicker('lunes', 'fin2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.lunes.fin2}}</b>
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col"><b>{{'tuesday'|translate}}</b></div>
+                    <div class="col text-right"><input id="chkmartes" type="checkbox" ng-click="disableDay('martes')" />{{'disable_day'|translate}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button id="martesinicio1" ng-click="displayTimePicker('martes', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.martes.inicio1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="martesfin1" ng-click="displayTimePicker('martes', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.martes.fin1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="martesinicio2" ng-click="displayTimePicker('martes', 'inicio2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.martes.inicio2}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="martesfin2" ng-click="displayTimePicker('martes', 'fin2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.martes.fin2}}</b>
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col"><b>{{'wednesday'|translate}}</b></div>
+                    <div class="col text-right"><input id="chkmiercoles" type="checkbox" ng-click="disableDay('miercoles')" />{{'disable_day'|translate}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button id="miercolesinicio1" ng-click="displayTimePicker('miercoles', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.miercoles.inicio1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="miercolesfin1" ng-click="displayTimePicker('miercoles', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.miercoles.fin1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="miercolesinicio2" ng-click="displayTimePicker('miercoles', 'inicio2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.miercoles.inicio2}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="miercolesfin2" ng-click="displayTimePicker('miercoles', 'fin2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.miercoles.fin2}}</b>
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col"><b>{{'thursday'|translate}}</b></div>
+                    <div class="col text-right"><input id="chkjueves" type="checkbox" ng-click="disableDay('jueves')" />{{'disable_day'|translate}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button id="juevesinicio1" ng-click="displayTimePicker('jueves', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.jueves.inicio1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="juevesfin1" ng-click="displayTimePicker('jueves', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.jueves.fin1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="juevesinicio2" ng-click="displayTimePicker('jueves', 'inicio2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.jueves.inicio2}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="juevesfin2" ng-click="displayTimePicker('jueves', 'fin2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.jueves.fin2}}</b>
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col"><b>{{'friday'|translate}}</b></div>
+                    <div class="col text-right"><input id="chkviernes" type="checkbox" ng-click="disableDay('viernes')" />{{'disable_day'|translate}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button id="viernesinicio1" ng-click="displayTimePicker('viernes', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.viernes.inicio1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="viernesfin1" ng-click="displayTimePicker('viernes', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.viernes.fin1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="viernesinicio2" ng-click="displayTimePicker('viernes', 'inicio2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.viernes.inicio2}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="viernesfin2" ng-click="displayTimePicker('viernes', 'fin2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.viernes.fin2}}</b>
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col"><b>{{'saturday'|translate}}</b></div>
+                    <div class="col text-right"><input id="chksabado" type="checkbox" ng-click="disableDay('sabado')" />{{'disable_day'|translate}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button id="sabadoinicio1" ng-click="displayTimePicker('sabado', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.sabado.inicio1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="sabadofin1" ng-click="displayTimePicker('sabado', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.sabado.fin1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="sabadoinicio2" ng-click="displayTimePicker('sabado', 'inicio2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.sabado.inicio2}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="sabadofin2" ng-click="displayTimePicker('sabado', 'fin2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.sabado.fin2}}</b>
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col"><b>{{'sunday'|translate}}</b></div>
+                    <div class="col text-right"><input id="chkdomingo" type="checkbox" ng-click="disableDay('domingo')" />{{'disable_day'|translate}}</div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button id="domingoinicio1" ng-click="displayTimePicker('domingo', 'inicio1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.domingo.inicio1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="domingofin1" ng-click="displayTimePicker('domingo', 'fin1')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.domingo.fin1}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="domingoinicio2" ng-click="displayTimePicker('domingo', 'inicio2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'starts'|translate}}: <br/> {{barberData.horario.domingo.inicio2}}</b>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="domingofin2" ng-click="displayTimePicker('domingo', 'fin2')" class="button button-block button-small button-stable" style="border-radius: 5px">
+                            <b>{{'ends'|translate}}: <br/> {{barberData.horario.domingo.fin2}}</b>
+                        </button>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+      </script>
+    </ion-content>
+</ion-view>

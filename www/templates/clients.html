@@ -1,0 +1,33 @@
+<ion-view view-title="{{'menu_2' | translate}}">
+    <ion-nav-buttons side="right">
+        <span class="badge myRed light" style="margin: 5px">{{clients.length}} </span>
+        <button class="button button-icon button-calm icon ion-ios-search" menu-toggle="right" ng-click="showFilterBar()"></button>
+        <i class="button button-icon button-new" ui-sref="app.client-add"></i>
+    </ion-nav-buttons>
+
+    <ion-content style="background-image: url('img/bg-appointments.jpg'); background-size: cover;">
+        <ion-list class="sidemenu-list">
+            <ion-item class="clearBg item-remove-animate item-thumbnail-left item-icon-right fontWhite" 
+                      ng-repeat="client in clients" type="item-text-wrap" 
+                      href="#/app/clients/{{client.MobileUser.id}}">
+                <img  src="img/barbersnet/img_nouser.png" class="avatar imgList" ng-src="{{client.MobileUser.foto}}"  />
+                <!--<img ng-if="client.MobileUser.foto==null || client.MobileUser.foto==''" class="avatar" ng-src="img/barbersnet/img_nouser.png" class="imgList" />-->
+                
+                <!--<br/>-->
+                <i class="icon ion-trophy energized" ng-if="client.MobileUser.best_rate != 0"></i>
+                <br/>
+                <b>{{client.MobileUser.nombre}}</b>
+                <small ng-if="client.MobileUser.email !== '' && client.MobileUser.email !== null"><br/>{{client.MobileUser.email}}</small>
+                <!--
+                <ion-option-button class="button-assertive" ng-click="remove(client)">
+                    Delete
+                </ion-option-button>
+                -->
+                <br/>
+                <small>{{'client' | translate}} <span  am-time-ago="client.MobileUser.first_appointment"></span></small>
+                
+            </ion-item>
+            
+        </ion-list>
+    </ion-content>
+</ion-view>

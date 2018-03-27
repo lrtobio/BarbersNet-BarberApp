@@ -1,0 +1,94 @@
+<ion-view view-title="{{'menu_5' | translate}}">
+    
+    <ion-nav-buttons side="right">
+        <a href="#" ng-click="showShareOptions()"><i class="button button-icon fontWhite ion-android-share-alt" ></i></a>
+        <a href="#/app/myprofile-edit"><i class="button button-icon fontWhite ion-compose" ></i></a>
+    </ion-nav-buttons> 
+    
+    <ion-content class="fontWhite" style="background: url(img/bg-detail-client.png) center; background-size: cover;">
+        <br/>
+        <center>
+            <img id ="foto" ng-src="{{barberData.foto}}" ng-model="barberData.foto" class="avatar" ng-click="rotateImage()" style="width: 150px; height: 150px"/>
+            <!--
+            <div class="row myPadding">
+                <div class="col">
+                    <a href="" ng-click="cargarFoto()"><img ng-src="img/adjuntar.png" width="25%"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="" ng-click="tomarFoto()"><img ng-src="img/camera.png" width="25%"/></a>
+                </div>
+            </div>
+            -->
+            <h3 class="fontWhite">{{barber.Barber.nombre}}</h3>
+            <span ng-class="barberData.activo ? 'badge badge-balanced':'badge badge-stable' ">{{barberData.activo ? active : inactive }}</span>
+            <div ng-if="barberData.descripcion!=null && barberData.descripcion!='' "><p style="text-align: center; font-style: italic">"{{barberData.descripcion}}"</p></div>
+            <hr/>
+            <p style="text-align: left" class="myPadding">{{'address' | translate}}: {{barberData.direccion}}
+                <br/>
+                {{'phone' | translate}}: +{{barberData.telefono}}
+                <br/>
+                {{'email' | translate}}: {{barberData.email}}
+            </p>
+            <p style="text-align: left" class="myPadding" ng-if="barberData.nombrebarberia!=null && barberData.nombrebarberia!='' "><b>{{'barbershop' | translate}}:</b> {{barberData.nombrebarberia}}</p>
+            <!--My code:
+            <b>{{barberData.code}}</b>
+            <br/>-->
+            <!--
+            <br/>
+            Share this app to other barbers:
+            <a href="#" ng-click="shareLinkBarbers()" ><br/>
+                <ion-icon class="icon-share" style="opacity: 0.7; background-color: #FFFFFF; border-radius: 100%" ></ion-icon>
+            </a>
+            <br/><br/>
+            Invite your clients to book using their app:
+            <a href="#" ng-click="shareLinkClients()" ><br/>
+                <ion-icon class="icon-share" style="opacity: 0.7; background-color: #FFFFFF; border-radius: 100%"></ion-icon>
+            </a>
+            <br/><br/>-->
+            <hr/>
+            <p style="text-align: left" class="myPadding">{{'currency' | translate}}: {{barberData.currency}}
+                <br/>
+                {{'average_time' | translate}}: +{{barberData.duracioncita}}
+                <br/>
+                {{'paypal_email' | translate}}: {{barberData.paypalemail}}
+                <br/>
+                {{'business_taxes' | translate}}: {{barberData.impuestos + "%"}}
+            </p>
+            
+            <!--
+            <p>
+            <small>Address</small> {{barberData.direccion}}
+            <br/>
+            <small>Phone:</small> {{barberData.telefono}}
+            <br/><small>Biografy:</small> {{barberData.descripcion}}
+            <br/><br/><small>Currency:</small> {{barberData.currency}}
+            <br/><small>Average service time (min):</small> {{barberData.duracioncita}}
+            <br/><br/><small>Barbershop:</small> {{barberData.nombrebarberia}}
+            <br/><small>Paypal email :</small> {{barberData.paypalemail}}
+            <br/><small>Business taxes</small> {{barberData.impuestos + "%"}}
+            </p>
+            <br/><br/>-->
+
+        </center>
+        
+        <div class="list">
+            <br/><br/>
+            <center>
+                
+            <!--<div  class="myPadding item item-borderless item-stacked-label">-->
+            <!--
+            <a href="#" ng-click="geolocalizar()" class="fontWhite" >
+                {{geolocalizado ? 'Located':'Locate on the map'}}<br/>
+                <ion-icon ng-class="geolocalizado ? 'ion-ios-location-outline':'ion-ios-location'" ></ion-icon>
+            </a>
+            -->
+            <!--
+            <button ng-click="shareLink()" ng-class="geolocalizado ? 'button button-block button-balanced':'button button-block button-calm'">{{geolocalizado ? 'Located':'Locate on the map'}}</button>
+            -->
+            <!--</div>-->
+            </center>
+            
+            
+        </div>
+        
+    </ion-content>
+    
+</ion-view>

@@ -1,0 +1,51 @@
+<ion-view view-title="{{'sign_up'| translate}}">
+
+    <ion-nav-bar class="bar-barber">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+    
+    <ion-content class="fontWhite" style="background: url(img/barbersnet/bg_fondo.png) center; background-size: cover;" overflow-scroll="false">
+        
+        <div ng-app="starter" ng-controller="BarberAddCtrl">
+        <form>
+        <br/>
+            <center>
+                <img id ="foto" src="img/barbersnet/img_nouser.png" ng-model="barberData.foto" class="avatar" ng-click="rotateImage()" style="width: 150px; height: 150px"/>
+                <div class="row myPadding">
+                    <div class="col">
+                        <a href="" ng-click="cargarFoto()"><img ng-src="img/adjuntar.png" width="25%"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="" ng-click="tomarFoto()"><img ng-src="img/camera.png" width="25%"/></a>
+                    </div>
+                    
+                </div>
+            </center>
+            
+            <div class="list"> 
+                <label class="myPadding item item-input item-stacked-label">
+                    <span class="input-label fontWhite bold">{{'barber_ref_code'| translate}}</span>
+                    <input type="text" ng-model="barberData.referredcode" placeholder="{{'barber_ref_code'| translate}}">
+                </label>
+                <label class="myPadding item item-input item-stacked-label">
+                    <span class="input-label fontWhite bold">{{'name'| translate}}</span>
+                    <input type="text" ng-model="barberData.nombre" placeholder="{{'full_name'| translate}}">
+                </label>
+                <label class="myPadding item item-input item-stacked-label">
+                    <span class="input-label fontWhite bold">{{'email'| translate}}</span>
+                    <input type="email" ng-model="barberData.email" placeholder="{{'enter_email'| translate}}">
+                </label>
+                <label class="myPadding item item-input item-stacked-label">
+                    <span class="input-label fontWhite bold">{{'comments'| translate}}</span><br/>
+                    <textarea ng-model="barberData.descripcion" placeholder="{{'obs_ph'| translate}}"></textarea>
+                </label>
+            </div>
+            
+            <button type="submit" name="submit" ng-click="saveBarberProfile()" class="button button-full myRed fontWhite">{{'save'| translate}}</button>
+            
+        
+        </form>
+        </div>
+        
+        <br/>
+        
+    </ion-content>
+</ion-view>

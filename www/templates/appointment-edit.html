@@ -1,0 +1,161 @@
+<ion-view view-title="{{'edit' | translate}} {{'appointment' | translate}}">
+
+    <ion-nav-bar class="bar-barber">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>   
+
+    <ion-content class="fontWhite" style="background-image: url('img/bg-appointments.jpg'); background-size: cover;" overflow-scroll="false">
+        
+        <br/>
+        <div>
+            <form>
+                <input type="hidden"  ng-model="dataAppo.appointment_id">
+                <div class="padding myPadding" style=" disabled: true;">
+                    
+                    <!--
+                    <i class="icon ion-android-person" style="font-size: 250%"></i>&nbsp;&nbsp;&nbsp;<strong>Client</strong>
+                    <br/>
+                    
+                    <div class="item-input-inset" style="border-radius: 5px">
+                        <label class="item-input-wrapper">
+                            <input style="color: black;" type="text" placeholder="Criteria" ng-model="dataAppo.criteria">
+                        </label>
+                        <button class="button button-small" ng-click="searchClients()">Search</button>                        
+                    </div>
+                    
+                    <label class="item item-input item-select" style="border-radius: 5px">
+                        <div class="input-label fontWhite"></div>
+                        
+                        <!-- ng-selected="client.MobileUser.id == selectedClient" -->
+                        <!--
+                        <select id="selectClients" ng-model="dataAppo.clientList" 
+                                
+                                ng-change="clearClientCriteria()"
+                            ng-options="client.MobileUser as client.MobileUser.nombre for client in clientList track by client.MobileUser.id" >
+                            
+                            <option ng-if="!selectedClient" value="">Select a client</option>
+                        </select>
+                    </label>
+                    -->
+                    
+                    <div class="padding myPadding"  style="text-align: center">
+                    
+                        <!--
+                        <i class="icon ion-android-person" style="font-size: 250%"></i>&nbsp;&nbsp;&nbsp;<strong>Client</strong>
+                        -->
+
+                        <i ng-if="client_fotourl==null || client_fotourl=='' " class="icon ion-android-person" style="font-size: 50px"></i>
+                        <img ng-if="client_fotourl!=null && client_fotourl!='' " src="{{client_fotourl}}" class="avatar" width="60px" height="60px" />
+                        <br/>
+                        <p>{{'client' | translate}} <br/><b>{{clientnombre}}</b></p>
+                        
+                    </div>
+                    
+                </div>
+                <hr>
+                <div class="padding myPadding">
+                    <div class='row row-center' style="padding: 0px 0px 10px 0px">
+                        <i class="icon-service" ></i>&nbsp;&nbsp;&nbsp;
+                        <div class="col-80">
+                            <strong>{{'service' | translate}}</strong>
+                        </div>
+                        <div class="col">
+                            <i ng-class="dataAppo.selectServices.nombre ? 'ion-checkmark-circled calm':'assertive ion-alert' "></i>
+                        </div>
+                    </div>
+                    <label class="item  item-select" style="border-radius: 5px">
+                        
+                        <!-- ng-change="setSelectedService(dataAppo.selectServices)" -->
+                        <select id="selectServices"  class="ion-input-select"  ng-change="onChangeService()" 
+                                ng-options="service.titulo for service in barberServicios.Service track by service.id" ng-model="dataAppo.selectServices">
+                                <!--ng-options="service.Service as (service.Service.titulo) for service in barberServices track by service.Service.id " >  -->
+                                
+                                <option id="option"  value=""> {{'select_service' | translate}}</option>
+                            <!--<option ng-repeat="service in barberServicios" value="{{service.id}}"> {{ service.titulo}}</option>-->
+                            
+                        </select>
+                    </label>
+                    <div  >
+                        <div class='row' ng-if="dataAppo.selectServices.nombre != null " >
+                            <div class="col">{{dataAppo.selectServices.nombre}}</div>
+                            
+                        </div>
+                        <div class='row row-center' ng-if="dataAppo.selectServices.duracion != null ">
+                            <div class="col">{{'length'|translate}}</div>
+                            <div class="col">
+                                <input type="number" id="duracion" min="0" max="90" maxlength="2" ng-model="dataAppo.duracion" style="text-align: center; vertical-align: middle" placeholder="{{'length_ph'|translate}}">
+                            </div>
+                            <div class="col-5">
+                                <i ng-class="dataAppo.duracion ? 'ion-checkmark-circled calm':'assertive ion-alert' "></i>
+                            </div>
+                        </div>
+                        <div class='row' ng-if="dataAppo.selectServices.nombre != null ">
+                            <div class="col">{{dataAppo.selectServices.puntos}}  {{'points' | translate}}</div>
+                            <div class="col" style="text-align: right">{{dataAppo.selectServices.precio |currency: currency + ' ':2}}</div>
+                        </div>
+                    </div>
+                </div>
+                <hr>                
+                <div class="padding myPadding">
+                <div class='row row-center' style="padding: 0">
+                    <i class="icon-calendar"></i>&nbsp;&nbsp;&nbsp;
+                    <div class="col-80">
+                        <strong>{{'set_date' | translate}}</strong>
+                    </div>
+                    <div class="col">
+                        <i ng-class="dataAppo.selectTime ? 'ion-checkmark-circled calm':'assertive ion-alert' "></i>
+                    </div>
+                </div>
+                <onezone-datepicker datepicker-object="onezoneDatepicker">
+                    <button class="button button-block button-small button-stable show-onezone-datepicker" style="border-radius: 5px">
+                        <b>{{ dataAppo.date | amDateFormat: 'dddd. MMMM D, YYYY'}} </b>
+                    </button>                    
+                </onezone-datepicker>
+                <input ng-model="dataAppo.date" id="date" type="hidden" style="color: black;" value="{{dataAppo.date}}" />
+                
+                    <label class="item item-input item-select" style="border-radius: 5px">
+                        <div class="input-label fontWhite"></div>
+                        <!-- ng-model="dataAppo.selectTime"  -->
+                        <select id="selectTime" ng-model="dataAppo.selectTime" class="ion-input-select"
+                                ng-options="time.value2 for time in timeList.Time track by time.id" >
+                            <option value="">{{'select_time' | translate}}</option>
+                        </select>
+                    </label>   
+                <br/>
+                <!--<strong><span ng-if="dataAppo.date !='No date selected' && dataAppo.selectTime!= ''">{{dataAppo.date | date:'fullDate'}} {{dataAppo.selectTime}}</span></strong>-->
+                </div>
+                
+                <hr>    
+                <div class="myPadding tabs tabs-dark tabs-icon-top" style="position: static; background: transparent">
+                    <a href="#" id="discount" class="tab-item active item-barber" ng-click="changeType('D')" style="border-radius: 5px">
+                        <i class="icon ion-pricetag"></i>{{'discount' | translate}}
+                    </a>
+                    <a href="#" id="tip" class="tab-item"  ng-click="changeType('P')"  style="border-radius: 5px">
+                        <i class="icon ion-thumbsup"></i>{{'tip' | translate}}
+                    </a>
+                    <a href="#" id="pay_add" class="tab-item"  ng-click="changeType('A')"  style="border-radius: 5px">
+                        <i class="icon ion-person-stalker"></i>{{'pay_add' | translate}}
+                    </a>
+                </div>
+                <label class="myPadding item item-input item-stacked-label item-borderless">
+                    <!--<span class="input-label fontWhite bold">{{'discount' | translate}}</span><br/>-->
+                    <!-- ng-model="dataAppo.descuento"   -->
+                    <input type="number" id="valoradicional" value="{{dataAppo.valoradicional}}" placeholder=" {{type_placeholder}} ({{currency}})" min="0" >
+                </label>
+                
+                <label class="myPadding item item-input item-stacked-label item-borderless">
+                    <span class="input-label fontWhite bold">{{'obs' | translate}}</span><br/>
+                    <textarea ng-model="dataAppo.observations" placeholder=" {{'obs_ph' | translate}}"></textarea>
+                </label>
+                
+                <br/>
+                
+                <button type="submit" name="submit" ng-click="saveAppointment()" class="button button-full fontWhite myRed">{{'save' | translate}}</button>
+                
+                <br/>
+            
+            </form>
+        </div>
+
+    </ion-content>
+</ion-view>

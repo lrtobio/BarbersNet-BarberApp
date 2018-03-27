@@ -1,0 +1,117 @@
+<ion-view view-title="{{'menu_1'| translate}}" >
+    
+    <ion-side-menu side="left"></ion-side-menu>
+    
+    <ion-nav-buttons side="right">
+       <i class="button button-icon button-new"  ui-sref="app.appointment-add"></i>
+       
+    </ion-nav-buttons>
+    
+    <ion-content style="background-image: url('img/bg-appointments.jpg'); background-size: cover;">
+        <ion-refresher
+            pulling-text="..."
+            on-refresh="doRefresh()" style="background-color: #EBEFF1">
+        </ion-refresher>
+        <onezone-datepicker datepicker-object="onezoneDatepicker">
+            <center class="fontWhite">
+            <br/>
+            <div ng-if="dataAppo.date =='No date selected'">
+            <ion-icon class="icon-calendar show-onezone-datepicker " style="width: 15%" ></ion-icon>
+            <h4 class="fontWhite">{{ dataAppo.date | amDateFormat:'dddd. MMMM D, YYYY'}}</h4>
+            </div>
+            <div ng-if="dataAppo.date !='No date selected'">
+            <ion-icon class="icon-calendar show-onezone-datepicker"></ion-icon>
+            <h5 class="fontWhite">{{ dataAppo.date | amDateFormat:'dddd. MMMM D, YYYY'}}</h5>
+            </div>
+            <span class="badge myRed light" style="opacity: 0.7">{{appointments.length}} </span>
+            </center>
+            <br/>
+        </onezone-datepicker>   
+       
+        <center ng-if="appointments==null || appointments.length<=0 ">
+            <p class="whiteColor" ><br/><br/>{{'pending_appo' | translate}}<br/><br/></p>
+        </center>
+        
+        <div class="div-on-top" scroll="false"  style="height: 200px" id="divAppos">
+            
+            <ion-scroll direction="y" class="list-on-bottom">
+                
+            <ion-list class="list animate-fade-slide-in-right myion-list">                        
+                <ion-item class="clearBg item-remove-animate item-avatar item-icon-right fontWhite"
+                ng-repeat="appointment in appointments" type="item-text-wrap"
+                ng-class="{'item-highlight': appointment_id==appointment.Appointment.id}"
+                href="#/app/appointments/{{appointment.Appointment.id}}" >
+                
+                <!--<div class="item-highlight" ng-if="appointment_id == appointment.Appointment.id" >-->
+                
+                <!--<div ng-if="{{appointment.MobileUser.foto}}">-->
+                <img ng-src="{{appointment.MobileUser.foto}}" />
+                <!--
+                <img ng-if="appointment.MobileUser.foto!=null && appointment.MobileUser.foto!=''" ng-src="{{appointment.MobileUser.foto}}" />
+                <img ng-if="appointment.MobileUser.foto==null && appointment.MobileUser.foto==''" ng-src="img/barbersnet/img_nouser.png" />
+                -->
+                
+                <!--</div>-->
+                <small>{{appointment.MobileUser.nombre}}</small><br/>
+                <b>{{appointment.Appointment.hora | lowercase}}</b><br/>
+                <small>{{appointment.Service.titulo}} ({{appointment.Service.nombre}})</small>
+               
+
+                <!--<p>{{appointment.price}}</p>-->
+
+                <!--
+                <i class="icon ion-chevron-right icon-accessory"></i>
+                -->
+                
+                <!--<i class="icon icon-accessory">{{currency}}&nbsp;{{appointment.Service.precio}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>-->
+                <i class="icon icon-accessory"><span class="badge badge-stable">{{appointment.Appointment.total_servicio | currency:currency+' ' :2}}</span></i>
+                
+                <ion-option-button class="button-positive fontWhite ion-compose" ng-click='goToView("/app/appointment-edit/{{appointment.Appointment.id}}")' >
+                    {{'edit' | translate}}
+                </ion-option-button>
+                
+                <ion-option-button class="button-assertive ion-trash-a" ng-click="removeAppointment({{appointment.Appointment.id}})">
+                  {{'delete' | translate}}
+                </ion-option-button>
+                
+                <!--</div>-->
+                </ion-item>
+            </ion-list>
+                
+            </ion-scroll>
+            
+        </div> 
+        <center>
+            <div class="row row-center">
+                <div class="col-33"><hr></div>
+                <div class="col-33"><div class="rank-label-container">
+                        <span class="label label-default rank-label"><b>{{barberReport.total | currency: currency+' '}}</b></span>
+                </div></div>
+                <div class="col-33"><hr></div>
+            </div>
+            <br/>
+            <ion-icon class="icon-time" style="width: 10%" ></ion-icon>
+        </center>
+        <br/>
+        <center>
+            <p class="fontWhite" ng-if="timeList==null || timeList.length<=0 "><br/><br/>{{'no_avilable_time' | translate}}</p>
+        </center>
+        <div style="text-align: center">
+            <a ng-repeat="time in timeList" style="margin: 0px 5px 5px 0px" class="button button-outline button-small button-clear button-light" href="#/app/appointment-add2/{{dataAppo.date}}/{{time.id}}" ><b>{{time.value2 | lowercase}}</b></a>
+            
+        </div>
+        <!--<ion-list class="sidemenu-list">
+            <ion-item class="clearBg item-remove-animate item-avatar item-icon-right fontWhite"
+                ng-repeat="time in timeList" type="item-text-wrap"
+                href="#/app/appointment-add2/{{dataAppo.date}}/{{time.id}}" >
+                
+                <!--<div class="item-highlight" ng-if="appointment_id == appointment.Appointment.id" >-->
+                
+               <!-- <ion-icon class="icon-calendar show-onezone-datepicker" style="width: 15%" ></ion-icon>
+                <b>{{time.value}}</b><br/>
+                <!--</div>-->
+           <!-- </ion-item>
+        </ion-list>-->
+        
+    </ion-content>
+</ion-view>

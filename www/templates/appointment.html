@@ -1,0 +1,68 @@
+<ion-view class="fontWhite" view-title="{{'detail_appo' | translate}}">
+
+    <ion-nav-bar class="bar-barber">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-content class="padding fontWhite" style="background-image: url('img/bg-detail-appo.png'); background-size: cover;">
+        <br/>
+        <center>
+            <img ng-if="appointment.MobileUser.foto==null || appointment.MobileUser.foto==''" ng-src="img/barbersnet/img_nouser.png" class="avatar" style="width: 150px; height: 150px">
+            <img ng-if="appointment.MobileUser.foto!=null && appointment.MobileUser.foto!=''" ng-src="{{appointment.MobileUser.foto}}" class="avatar" style="width: 150px; height: 150px">
+            <p>
+            <h3 class="fontWhite">{{appointment.MobileUser.nombre}}</h3>
+            <p>
+                {{appointment.MobileUser.telefono}}
+            </p>
+            <h4 class="fontWhite">{{'detail_appo' | translate}}</h4>
+            <p>
+                {{appointment.Appointment.fecha | amDateFormat:'dddd. MMMM D, YYYY. h:mm a'}}<br/>
+                {{appointment.Service.titulo}} ({{appointment.Service.nombre}}) <br/> {{appointment.Service.precio | currency: currency +' ' : 2}}<br/> <small>{{ label_tipovalor}}: {{appointment.Appointment.valoradicional | currency: currency +' ' : 2}}</small>
+            </p>
+            <span class="badge badge-stable" style='font-size: 150%'>{{appointment.Appointment.total_servicio | currency: currency +' ' : 2}}</span>
+            <br/>
+            <p ng-if="appointment.Appointment.observaciones != null && appointment.Appointment.observaciones != ''">{{'obs' | translate}} <br/>{{appointment.Appointment.observaciones}}</p>
+            
+            <!--
+            <div ng-if="appointment.Service.linkdepago!=null && appointment.Service.linkdepago!='' ">
+                <a class="button button-icon icon ion-card fontWhite" href="{{appointment.Service.linkdepago}}" target="_blank" >&nbsp;&nbsp;Click here to pay</a>
+            </div>
+            -->
+            <br/>
+            
+            <div>
+                <a ng-if="appointment.MobileUser.telefono!=null && appointment.MobileUser.telefono!=''" href="tel:{{appointment.MobileUser.telefono}}" ><img src="img/barbersnet/btn_call.png" width="20%"/></a>
+               
+                <!--<a class="button icon-left ion-ios7-telephone button-calm button-outline" ng-href="tel: {{appointment.MobileUser.telefono}}"><img src="img/barbersnet/btn_call.png" /></a>-->
+                &nbsp;&nbsp;
+                    <!-- onclick="javascript:return confirm('Are you sure ?');"-->
+                <a ng-if="appointment.Appointment.id!=null && appointment.Appointment.id!=''" href="#" ng-click="removeAppointment(appointment.Appointment.id)" ><img src="img/barbersnet/btn_delete.png" width="20%"/></a>
+                 &nbsp;&nbsp;
+                <a ng-if="appointment.Appointment.id!=null && appointment.Appointment.id!=''" href="#/app/appointment-edit/{{appointment.Appointment.id}}" ><img src="img/barbersnet/btn_edit.png" width="20%"/></a>
+                &nbsp;&nbsp;
+                <a ng-if="appointment.MobileUser.id!=null && appointment.MobileUser.id!=''" href="#/app/client-history/{{appointment.MobileUser.id}}"><img src="img/barbersnet/btn_history.png" width="20%"/></a>
+            </div>
+            
+            <!--
+            <button class="fontWhite ion-compose" ng-click='goToView("/app/appointment-edit/{{appointment.Appointment.id}}")' >
+                Edit
+            </button>
+            -->
+            
+            
+            <!--
+            <div>
+                <a href="tel:{{appointment.MobileUser.telefono}}" ><img src="img/barbersnet/btn_call.png" /></a>
+                &nbsp;&nbsp;
+                <a class="button icon-left ion-ios7-telephone button-calm button-outline" ng-href="tel:{{appointment.MobileUser.telefono}}"><img src="img/barbersnet/btn_call.png" /></a>
+            </div>
+            -->
+            
+            
+            
+            
+            <br/><br/>
+
+        </center>
+    </ion-content>
+</ion-view>
